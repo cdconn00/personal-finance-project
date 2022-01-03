@@ -1,19 +1,21 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+package-lock.json
+.idea/
 # dependencies
-/node_modules
-/.pnp
+front-end/node_modules
+front-end/.pnp
 .pnp.js
 
 # testing
 /coverage
 
 # next.js
-/.next/
-/out/
+front-end/.next/
+front-end/out/
 
 # production
-/build
+front-end/build
 
 # misc
 .DS_Store
