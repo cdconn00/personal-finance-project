@@ -1,4 +1,19 @@
 {
-  "extends": ["next/core-web-vitals", "plugin:prettier/recommended"]
-  
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "extends": ["airbnb", "prettier", "plugin:@next/next/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prop-types": 0
+  }
 }
