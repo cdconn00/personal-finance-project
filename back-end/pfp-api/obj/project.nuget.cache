@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "XRV3BSlUDN70xvNhaGDAXg5LgLrzQGQWf5Wz348sjC/woO8ngLnYXpHQs58ee2d6aYQi8rDNGqtPBGE8Oj9KOA==",
+  "success": true,
+  "projectFilePath": "D:\\personal-repos\\personal-finance-project\\back-end\\pfp-api\\pfp-api.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\cdcon\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\cdcon\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\cdcon\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\cdcon\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\cdcon\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\cdcon\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}

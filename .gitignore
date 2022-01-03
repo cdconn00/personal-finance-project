@@ -34,3 +34,5 @@ yarn-error.log*
 
 # vercel
 .vercel
+back-end/pfp-api/appsettings.json
+back-end/pfp-api/appsettings.Development.json
