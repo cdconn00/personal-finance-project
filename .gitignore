@@ -496,3 +496,4 @@ back-end/pfp-api/appsettings.Development.json
 back-end/pfp-api/.vs/
 back-end/pfp-api/obj/
 back-end/pfp-api/packages/
+back-end/pfp-api/bin/
