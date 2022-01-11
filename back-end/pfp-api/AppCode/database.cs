@@ -72,16 +72,25 @@ namespace pfp_api.Core
             {
                 connection.Open();
 
-                using (var cmd = new NpgsqlCommand(sql, connection))
+                try
                 {
-                    foreach (Column c in columns)
+                    using (var cmd = new NpgsqlCommand(sql, connection))
                     {
-                        cmd.Parameters.AddWithValue(c.Name, c.Type, c.Value);
+                        foreach (Column c in columns)
+                        {
+                            cmd.Parameters.AddWithValue(c.Name, c.Type, c.Value);
+                        }
+
+
+                        id = Convert.ToInt32(cmd.ExecuteScalar());
                     }
-
-
-                    id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
+                catch (NpgsqlException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+
             }
 
             return id;

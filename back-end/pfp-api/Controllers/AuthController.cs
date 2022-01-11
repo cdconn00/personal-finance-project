@@ -10,31 +10,35 @@ namespace pfp_api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        [HttpPost("")]
+        public string Test()
         {
-            return new string[] { "value1", "value2" };
+            return "test";
+        } 
+
+        [HttpPost("register")]
+        public void Get([FromForm] RegistrationRequest req)
+        {
+            User u = new User(-1, req.FirstName, req.LastName, req.Email, BCrypt.Net.BCrypt.HashPassword(req.Password));
+            u.Save();
+
+            if (u.Id == -1)
+            {
+                // error trying to register user
+            }
+            else
+            {
+                // user registered successfully, communicate back
+            }
+
         }
 
-        [HttpGet("{id}")]
-        public string Get(int id)
+        public class RegistrationRequest
         {
-            return "value";
-        }
-
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            public string Email { get; set; } = "";
+            public string FirstName { get; set; } = "";
+            public string LastName { get; set; } = "";
+            public string Password { get; set; } = "";
         }
     }
 }
