@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NpgsqlTypes;
 using pfp_api.Core;
+using pfp_api.Models;
 using System.Collections;
 using System.Data;
 namespace pfp_api.Controllers

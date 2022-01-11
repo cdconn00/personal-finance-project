@@ -11,34 +11,26 @@ namespace pfp_api.Core
         {
             DataSet ds = new DataSet();
 
-            try
+            using (NpgsqlConnection connection = new NpgsqlConnection(AppSettings.Current.ConnectString))
             {
-                using (NpgsqlConnection connection = new NpgsqlConnection(AppSettings.Current.ConnectString))
+                using (var cmd = new NpgsqlCommand(sql, connection))
                 {
-                    using (var cmd = new NpgsqlCommand(sql, connection))
+                    if (parameters != null)
                     {
-                        if (parameters != null)
+                        foreach (Param itm in parameters)
                         {
-                            foreach (Param itm in parameters)
-                            {
-                                cmd.Parameters.AddWithValue(itm.Name, itm.Type, itm.Value);
-                            }
+                            cmd.Parameters.AddWithValue(itm.Name, itm.Type, itm.Value);
                         }
-
-                        NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(cmd);
-
-                        ds.Reset();
-                        dataAdapter.Fill(ds);
-                        connection.Close();
-
-                        return ds;
                     }
+
+                    NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(cmd);
+
+                    ds.Reset();
+                    dataAdapter.Fill(ds);
+                    connection.Close();
+
+                    return ds;
                 }
-            }
-            catch (NpgsqlException ex)
-            {
-                Console.WriteLine(ex.Message);
-                return ds;
             }
         }
 
