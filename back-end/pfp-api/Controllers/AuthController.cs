@@ -3,7 +3,6 @@ using NpgsqlTypes;
 using pfp_api.Core;
 using System.Collections;
 using System.Data;
-
 namespace pfp_api.Controllers
 {
     [Route("api/auth")]
@@ -13,13 +12,6 @@ namespace pfp_api.Controllers
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            ArrayList p = new ArrayList
-            {
-                new database.Param("test", NpgsqlDbType.Integer, 1)
-            };
-
-            DataSet ds = database.GetDataSet("SELECT 1 = @test", p);
-
             return new string[] { "value1", "value2" };
         }
 

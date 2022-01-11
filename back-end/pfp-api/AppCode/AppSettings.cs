@@ -31,8 +31,16 @@
         {
             var builder = new ConfigurationBuilder()
                             .SetBasePath(Directory.GetCurrentDirectory())
-                            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                             .AddEnvironmentVariables();
+
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+            {
+                builder.AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
+            }
+            else
+            {
+                builder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            }
 
             IConfigurationRoot configuration = builder.Build();
 
