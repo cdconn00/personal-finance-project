@@ -2,6 +2,7 @@
 
 package-lock.json
 .idea/
+.next/
 # dependencies
 front-end/node_modules
 front-end/.pnp
