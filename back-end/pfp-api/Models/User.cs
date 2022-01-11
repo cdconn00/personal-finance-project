@@ -6,7 +6,16 @@ namespace pfp_api.Models
 {
     public class User
     {
-        public User(int id, string firstName, string lastName, string email, string password, DateTime? createDate = null, DateTime? updateDate = null)
+        public User(
+            int id,
+            string firstName,
+            string lastName,
+            string email,
+            string password,
+            DateTime? createDate = null,
+            DateTime? updateDate = null,
+            Guid? apiKey = null,
+            DateTime? apiKeyExpiration = null)
         {
             Id = id;
             FirstName = firstName;
@@ -19,6 +28,12 @@ namespace pfp_api.Models
 
             if (updateDate != null)
                 UpdateDate = updateDate;
+
+            if (apiKey != null && apiKey != Guid.Empty)
+                APIKey = apiKey;
+
+            if (apiKeyExpiration != null)
+                APIKeyExpiration = apiKeyExpiration;
         }
 
         public int Id { get; set; }
@@ -28,6 +43,8 @@ namespace pfp_api.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        public Guid? APIKey { get; set; }
+        public DateTime? APIKeyExpiration { get; set; }
 
         public void Save()
         {
@@ -40,9 +57,14 @@ namespace pfp_api.Models
 
             if (this.Id == -1)
             {
-                // New user, encrypt and store their password
+                // New user, encrypt and store their password, give them an API key to access the site
                 this.Password = BCrypt.Net.BCrypt.HashPassword(this.Password);
+                this.APIKey = Guid.NewGuid();
+                this.APIKeyExpiration = DateTime.UtcNow.AddHours(1);
+
                 c.Add(new database.Column("password", NpgsqlTypes.NpgsqlDbType.Varchar, this.Password));
+                c.Add(new database.Column("api_key", NpgsqlTypes.NpgsqlDbType.Uuid, this.APIKey));
+                c.Add(new database.Column("api_key_expiration", NpgsqlTypes.NpgsqlDbType.TimestampTz, this.APIKeyExpiration));
             }
             else
             {
@@ -72,7 +94,9 @@ namespace pfp_api.Models
                         r["email"] + "",
                         r["password"] + "",
                         Convert.ToDateTime(r["create_date"]),
-                        Convert.ToDateTime(r["update_date"]));
+                        Convert.ToDateTime(r["update_date"]),
+                        r["api_key"] + "" == "" ? Guid.Empty : Guid.Parse(r["api_key"] + ""),
+                        r["api_key_expiration"] + "" == "" ? null : Convert.ToDateTime(r["api_key_expiration"]));
                 }
 
                 return null;

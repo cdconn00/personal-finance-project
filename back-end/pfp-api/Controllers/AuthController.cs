@@ -28,9 +28,9 @@ namespace pfp_api.Controllers
             }
             else
             {
+                
                 // user registered successfully, communicate back
             }
-
         }
 
         public class RegistrationRequest
