@@ -10,15 +10,6 @@ namespace pfp_api.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IConfiguration Configuration;
-        private database db;
-
-        public AuthController(IConfiguration configuration)
-        {
-            Configuration = configuration;
-            db = new database(Configuration);
-        }
-
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -27,7 +18,7 @@ namespace pfp_api.Controllers
                 new database.Param("test", NpgsqlDbType.Integer, 1)
             };
 
-            DataSet ds = db.GetDataSet("SELECT 1 = @test", p);
+            DataSet ds = database.GetDataSet("SELECT 1 = @test", p);
 
             return new string[] { "value1", "value2" };
         }
