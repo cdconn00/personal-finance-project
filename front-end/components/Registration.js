@@ -11,11 +11,40 @@ function Registration() {
     formState: { errors },
   } = useForm();
 
+  // Set up watch to ensure password matches its confirm password
   const password = useRef({});
   password.current = watch('password', '');
 
   const onSubmit = async (data) => {
-    alert(JSON.stringify(data));
+    const registrationRequest = {
+      Email: data.email,
+      FirstName: data.firstName,
+      LastName: data.lastName,
+      Password: data.password,
+    };
+
+    await fetch('https://localhost:7220/api/auth/register', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(registrationRequest),
+    })
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          console.log(error);
+        }
+      );
+
+    console.log(registrationRequest);
   };
 
   return (
@@ -57,7 +86,7 @@ function Registration() {
                 {/* /> */}
                 <div className="rounded-md shadow-sm -space-y-px">
                   <div>
-                    <label htmlFor="first-name" className="sr-only">
+                    <label htmlFor="firstName" className="sr-only">
                       First name
                     </label>
                     <input

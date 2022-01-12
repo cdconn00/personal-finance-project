@@ -17,7 +17,7 @@ namespace pfp_api.Controllers
         } 
 
         [HttpPost("register")]
-        public void Get([FromForm] RegistrationRequest req)
+        public void Get([FromBody] RegistrationRequest req)
         {
             User u = new User(-1, req.FirstName, req.LastName, req.Email, BCrypt.Net.BCrypt.HashPassword(req.Password));
             u.Save();
