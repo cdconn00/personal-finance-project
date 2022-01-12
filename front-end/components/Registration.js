@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { LoginIcon } from '@heroicons/react/solid';
 import styles from '../styles/LandingNavbar.module.css';
@@ -10,9 +10,13 @@ function Registration() {
     watch,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
 
-  console.log(watch('firstName'));
+  const password = useRef({});
+  password.current = watch('password', '');
+
+  const onSubmit = async (data) => {
+    alert(JSON.stringify(data));
+  };
 
   return (
     <>
@@ -143,10 +147,9 @@ function Registration() {
                     <input
                       {...register('confirmPassword', {
                         required: 'Required',
-                        pattern: {
-                          value: /^[A-Z]+/i,
-                          message: 'invalid password',
-                        },
+                        validate: (value) =>
+                          value === password.current ||
+                          'The passwords do not match',
                       })}
                       id="confirmPassword"
                       name="confirmPassword"
