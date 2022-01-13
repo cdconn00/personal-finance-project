@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
 import { useForm } from 'react-hook-form';
+import { useRouter } from 'next/router';
+import Cookie from 'js-cookie';
 import { LoginIcon } from '@heroicons/react/solid';
 import styles from '../styles/LandingNavbar.module.css';
 
@@ -10,6 +12,7 @@ function Registration() {
     watch,
     formState: { errors },
   } = useForm();
+  const router = useRouter();
 
   // Set up watch to ensure password matches its confirm password
   const password = useRef({});
@@ -34,17 +37,20 @@ function Registration() {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log(result);
+          Cookie.set('auth-guid', result);
+          router.push({
+            pathname: '/',
+            query: { returnUrl: router.asPath },
+          });
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
+          // show error message at top of form
           console.log(error);
         }
       );
-
-    console.log(registrationRequest);
   };
 
   return (

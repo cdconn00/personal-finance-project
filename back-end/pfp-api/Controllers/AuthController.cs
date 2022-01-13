@@ -4,6 +4,8 @@ using pfp_api.Core;
 using pfp_api.Models;
 using System.Collections;
 using System.Data;
+using System.Net;
+
 namespace pfp_api.Controllers
 {
     [Route("api/auth")]
@@ -17,19 +19,24 @@ namespace pfp_api.Controllers
         } 
 
         [HttpPost("register")]
-        public void Get([FromBody] RegistrationRequest req)
+        public IActionResult Get([FromBody] RegistrationRequest req)
         {
+            if (string.IsNullOrEmpty(req.FirstName) || string.IsNullOrEmpty(req.LastName) || string.IsNullOrEmpty(req.Email) || string.IsNullOrEmpty(req.Password))
+            {
+                return BadRequest("Missing or invalid request parameters");
+            }
+
             User u = new User(-1, req.FirstName, req.LastName, req.Email, BCrypt.Net.BCrypt.HashPassword(req.Password));
             u.Save();
 
             if (u.Id == -1)
             {
-                // error trying to register user
+                var message = "Unable to create account. That email already exists.";
+                return BadRequest(message);
             }
             else
             {
-                
-                // user registered successfully, communicate back
+                return Ok(u.APIKey);
             }
         }
 
